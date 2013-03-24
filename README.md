@@ -1,4 +1,5 @@
 # chef-pureftpd cookbook
+[![Build Status](https://secure.travis-ci.org/phatforge/chef-pureftpd.png)](http://travis-ci.org/phatforge/chef-pureftpd)
 
 # Requirements
 
