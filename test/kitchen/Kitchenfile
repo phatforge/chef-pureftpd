@@ -1,0 +1,3 @@
+cookbook "chef-pureftpd" do
+
+end
