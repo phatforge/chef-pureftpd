@@ -32,7 +32,7 @@ directory node['pureftpd']['base_config_dir'] do
   owner  node['pureftpd']['owner']
   group  node['pureftpd']['group']
   mode   0755
-  not_if { ::File.directory?(node['pureftpd']['base_config_dir'])}
+  not_if { ::File.exists?(node['pureftpd']['base_config_dir'])}
 end
 
 case node['platform']
@@ -42,7 +42,7 @@ when "ubuntu"
       owner  node['pureftpd']['owner']
       group  node['pureftpd']['group']
       mode   0755
-      not_if { ::File.directory?("#{node['pureftpd']['base_config_dir']}/#{conf_dir}")}
+      not_if { ::File.exists?("#{node['pureftpd']['base_config_dir']}/#{conf_dir}")}
     end
   end
 
@@ -66,7 +66,7 @@ directory node['pureftpd']['log_dir'] do
   owner     node['pureftpd']['owner']
   group     node['pureftpd']['group']
   mode 0755
-  not_if { ::File.directory?(node['pureftpd']['log_dir'])}
+  not_if { ::File.exists?(node['pureftpd']['log_dir'])}
 end
 
 include_recipe 'pureftpd::logrotate'

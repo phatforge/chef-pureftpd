@@ -13,7 +13,7 @@ directory node['pureftpd']['logrotate']['config_dir'] do
   owner  node['pureftpd']['owner']
   group  node['pureftpd']['group']
   mode   0755
-  not_if { ::File.directory?(node['pureftpd']['logrotate']['config_dir'])}
+  not_if { ::File.exists?(node['pureftpd']['logrotate']['config_dir'])}
 end
 
 Chef::Log.warn node.pureftpd.logrotate.config
