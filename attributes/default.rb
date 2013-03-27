@@ -21,12 +21,13 @@
 
 default['pureftpd']['service']                    = "pure-ftpd"
 default['pureftpd']['base_config_dir']            = "/etc/pure-ftpd"
+default['pureftpd']['log_dir']                    = "/var/log/pure-ftpd"
+
 default['pureftpd']['default']['run_mode']        = "standalone" # or 'inetd'
 default['pureftpd']['default']['virtual_chroot']  = true
 default['pureftpd']['default']['upload_script']   = nil
 default['pureftpd']['default']['upload_uid']      = nil
 default['pureftpd']['default']['upload_gid']      = nil
-
 
 # default configurations for base package
 default['pureftpd']['base']['conf']['UnixAuthentication'] = "no"
@@ -41,7 +42,8 @@ default['pureftpd']['base']['auth']['70pam']              = "yes"
 
 case platform
 when 'ubuntu','debian'
-  default['pureftpd']['packages']                 = %w{pure-ftpd-common}
-  default['pureftpd']['base_config_dir']          = "/etc/pure-ftpd"
+  default['pureftpd']['packages']                         = %w{pure-ftpd-common}
+  default['pureftpd']['base_config_dir']                  = "/etc/pure-ftpd"
+  default['pureftpd']['log_dir']                          = "/var/log/pure-ftpd"
 end
 

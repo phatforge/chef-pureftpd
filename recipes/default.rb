@@ -7,12 +7,12 @@
 # All rights reserved - Do Not Redistribute
 #
 
-
+include_recipe 'apt'
 
 node['pureftpd']['packages'].each do |pkg|
   package pkg do
     action :install
-    notifies :start, "service['pure-ftpd']"
+    notifies :start, "service[#{node['pureftpd']['service']}]"
   end
 end
 
@@ -32,27 +32,41 @@ directory node['pureftpd']['base_config_dir'] do
   owner  node['pureftpd']['owner']
   group  node['pureftpd']['group']
   mode   0755
+  not_if { ::File.directory?(node['pureftpd']['base_config_dir'])}
 end
 
-case platform
+case node['platform']
 when "ubuntu"
   %w{auth conf db}.each do |conf_dir|
-    directory "#{node['pureftpd']['base_config_dir']}/#{config_dir}" do
+    directory "#{node['pureftpd']['base_config_dir']}/#{conf_dir}" do
       owner  node['pureftpd']['owner']
       group  node['pureftpd']['group']
       mode   0755
+      not_if { ::File.directory?("#{node['pureftpd']['base_config_dir']}/#{conf_dir}")}
     end
   end
 
-  node['pureftpd']['base'].each do |setting_type|
-    setting_type.each_pair do |setting, value|
-    file "#{node['pureftpd']['base_config_dir']}/#{setting_type.to_s}/#{setting}" do
-      owner     node['pureftpd']['owner']
-      group     node['pureftpd']['group']
-      mode      0755
-      contents  value
+  node['pureftpd']['base'].each do |setting|
+    next if setting.last.nil?
+    settings = setting.last
+    settings.each_pair do |key, value|
+      # if nil then delete the file
+      file "#{node['pureftpd']['base_config_dir']}/#{setting.first}/#{key}" do
+        owner     node['pureftpd']['owner']
+        group     node['pureftpd']['group']
+        mode      0644
+        content   value
+        notifies  :restart, "service[#{node['pureftpd']['service']}]", :delayed
+      end
     end
   end
 end
 
-#include_recipe 'pureftpd::logrotate'
+directory node['pureftpd']['log_dir'] do
+  owner     node['pureftpd']['owner']
+  group     node['pureftpd']['group']
+  mode 0755
+  not_if { ::File.directory?(node['pureftpd']['log_dir'])}
+end
+
+include_recipe 'pureftpd::logrotate'
