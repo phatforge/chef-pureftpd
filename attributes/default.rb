@@ -24,7 +24,7 @@ default['pureftpd']['base_config_dir']            = "/etc/pure-ftpd"
 default['pureftpd']['log_dir']                    = "/var/log/pure-ftpd"
 
 default['pureftpd']['default']['run_mode']        = "standalone" # or 'inetd'
-default['pureftpd']['default']['virtual_chroot']  = true
+default['pureftpd']['default']['virtual_chroot']  = nil
 default['pureftpd']['default']['upload_script']   = nil
 default['pureftpd']['default']['upload_uid']      = nil
 default['pureftpd']['default']['upload_gid']      = nil
@@ -37,8 +37,9 @@ default['pureftpd']['base']['conf']['MinUID']             = "1000"
 default['pureftpd']['base']['conf']['PAMAuthentication']  = "yes"
 default['pureftpd']['base']['conf']['PureDB']             = "/etc/pure-ftpd/pureftpd.pdb"
 default['pureftpd']['base']['conf']['NoAnonymous']        = "yes"
-default['pureftpd']['base']['auth']['65unix']             = "no"
-default['pureftpd']['base']['auth']['70pam']              = "yes"
+
+default['pureftpd']['base']['auth']['65unix']             = "UnixAuthentication"
+default['pureftpd']['base']['auth']['70pam']              = "PAMAuthentication"
 
 case platform
 when 'ubuntu','debian'

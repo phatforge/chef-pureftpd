@@ -7,7 +7,6 @@
 # All rights reserved - Do Not Redistribute
 #
 
-include_recipe 'apt'
 include_recipe 'pureftpd::default'
 
 node['pureftpd']['packages'].each do |pkg|

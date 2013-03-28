@@ -46,18 +46,19 @@ when "ubuntu"
     end
   end
 
-  node['pureftpd']['base'].each do |setting|
-    next if setting.last.nil?
-    settings = setting.last
-    settings.each_pair do |key, value|
-      # if nil then delete the file
-      file "#{node['pureftpd']['base_config_dir']}/#{setting.first}/#{key}" do
-        owner     node['pureftpd']['owner']
-        group     node['pureftpd']['group']
-        mode      0644
-        content   value
-        notifies  :restart, "service[#{node['pureftpd']['service']}]", :delayed
-      end
+  node['pureftpd']['base']['conf'].each do |settings|
+    file "#{node['pureftpd']['base_config_dir']}/conf/#{settings.first}" do
+      owner     node['pureftpd']['owner']
+      group     node['pureftpd']['group']
+      mode      0644
+      content   settings.last
+      notifies  :restart, "service[#{node['pureftpd']['service']}]", :delayed
+    end
+  end
+
+  node['pureftpd']['base']['auth'].each do |settings|
+    link "#{node['pureftpd']['base_config_dir']}/auth/#{settings.first}" do
+      to "#{node['pureftpd']['base_config_dir']}/conf/#{settings.last}"
     end
   end
 end
