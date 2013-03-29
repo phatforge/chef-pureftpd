@@ -24,7 +24,7 @@ default['pureftpd']['base_config_dir']            = "/etc/pure-ftpd"
 default['pureftpd']['log_dir']                    = "/var/log/pure-ftpd"
 
 default['pureftpd']['default']['run_mode']        = "standalone" # or 'inetd'
-default['pureftpd']['default']['virtual_chroot']  = nil
+default['pureftpd']['default']['virtual_chroot']  = false
 default['pureftpd']['default']['upload_script']   = nil
 default['pureftpd']['default']['upload_uid']      = nil
 default['pureftpd']['default']['upload_gid']      = nil
