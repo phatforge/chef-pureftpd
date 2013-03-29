@@ -1,27 +1,21 @@
 #
 # Cookbook Name:: pureftpd
-# Recipe:: default
+# Recipe:: mysql
 #
 # Copyright (C) 2013 Pritesh Mehta
 #
 # All rights reserved - Do Not Redistribute
 #
 
+# mysql specific attributes
+case node['platform']
+when 'ubuntu','debian'
+  node.set['pureftpd']['packages']                 = %w{pure-ftpd-mysql}
+end
+
+node.set['pureftpd']['service'] = 'pure-ftpd-mysql'
+
 include_recipe 'pureftpd::default'
-
-node['pureftpd']['packages'].each do |pkg|
-  package pkg do
-    action :install
-    notifies :start, "service[#{node['pureftpd']['service']}]"
-  end
-end
-
-service node['pureftpd']['service'] do
-  supports status: true, restart: true
-  action [ :enable, :start ]
-end
-
-Chef::Log.warn node['pureftpd']['mysql']['config']
 
 template node['pureftpd']['mysql']['config'] do
   source   "mysql.conf.erb"

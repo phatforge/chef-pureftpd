@@ -1,6 +1,6 @@
 #
 # cookbook Name:: pureftpd
-# Attributes:: default
+# Attributes:: authd
 #
 # Author:: Pritesh Mehta <pritesh@phatforge.com>
 #
@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-default['pureftpd']['service']                    = "pure-ftpd-authd"
+
 default['pureftpd']['authd']['service_dir']       = "/etc/init.d"
 
 default['pureftpd']['authd']['enable'] = false

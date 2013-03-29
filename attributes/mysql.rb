@@ -1,6 +1,6 @@
 #
 # cookbook Name:: pureftpd
-# Attributes:: default
+# Attributes:: mysql
 #
 # Author:: Pritesh Mehta <pritesh@phatforge.com>
 #
@@ -19,13 +19,5 @@
 # limitations under the License.
 #
 
-default['pureftpd']['service']                    = "pure-ftpd-mysql"
-
 # default configurations for base package
 default['pureftpd']['mysql']['config']            = "#{pureftpd['base_config_dir']}/db/mysql.conf"
-
-case platform
-when 'ubuntu','debian'
-  default['pureftpd']['packages']                 = %w{pure-ftpd-mysql}
-end
-
