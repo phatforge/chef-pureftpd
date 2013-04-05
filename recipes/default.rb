@@ -63,6 +63,16 @@ when "ubuntu"
   end
 end
 
+unless node['pureftpd']['base']['conf']['FortunesFile'].nil?
+  template node['pureftpd']['base']['conf']['FortunesFile'] do
+    source  'fortunes.txt.erb'
+    owner   node['pureftpd']['owner']
+    group   node['pureftpd']['group']
+    mode    0644
+  end
+end
+
+
 directory node['pureftpd']['log_dir'] do
   owner     node['pureftpd']['owner']
   group     node['pureftpd']['group']
