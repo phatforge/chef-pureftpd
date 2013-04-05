@@ -51,7 +51,7 @@ when "ubuntu"
       owner     node['pureftpd']['owner']
       group     node['pureftpd']['group']
       mode      0644
-      content   settings.last
+      content   settings.last.to_s
       notifies  :restart, "service[#{node['pureftpd']['service']}]", :delayed
     end
   end
