@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 ### BEGIN INIT INFO
 # Provides:          pure-ftpd
 # Required-Start:    $remote_fs $syslog
@@ -91,7 +91,7 @@ start_authagent() {
 		AOPTS="$AOPTS -s $ADSOCK"
 		AOPTS="$AOPTS -r $ADHANDLER"
 		echo -n "$1 $ADDESC: "
-		RAILS_ENV=production start-stop-daemon --start $SSDAEMONLOGOPTS --oknodo \
+		start-stop-daemon --start $SSDAEMONLOGOPTS --oknodo \
 		  --exec $AUTHDDAEMON -- -p /var/run/pure-ftpd/pure-authd.pid -B $AOPTS
 		echo "$ADNAME."
 
